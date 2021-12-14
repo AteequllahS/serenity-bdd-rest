@@ -7,20 +7,17 @@ import org.junit.jupiter.api.BeforeAll;
 
 public class SpartanTestBase {
 
-    //send request to GET http://54.174.254.49:8000
     @BeforeAll
-    public static void setup(){
-
+    public static void setUp(){
         RestAssured.baseURI = "http://54.174.254.49:8000";
-        RestAssured.basePath="/api";
+        RestAssured.basePath = "/api";
     }
-
     @AfterAll
     public static void teardown() {
         RestAssured.reset();
-
         // there is also a method to ensure to reset all rest assured static fields
         // that serenity use SerenityRest.reset() method
         SerenityRest.reset();
     }
+
 }

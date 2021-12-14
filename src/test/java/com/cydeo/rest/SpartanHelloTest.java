@@ -1,48 +1,35 @@
 package com.cydeo.rest;
 
-import io.restassured.RestAssured;
+import com.cydeo.utility.SpartanTestBase;
 import io.restassured.http.ContentType;
+import net.serenitybdd.junit5.SerenityJUnit5Extension;
 import net.serenitybdd.rest.Ensure;
 import net.serenitybdd.rest.SerenityRest;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import net.serenitybdd.junit5.SerenityJUnit5Extension;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import static net.serenitybdd.rest.SerenityRest.lastResponse;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+
+// How do we tell this is not a regular test but it's a serenity test that meant to generate some report
 @ExtendWith(SerenityJUnit5Extension.class)
-public class SpartanHelloTest {
-
-    //send request to GET http://54.174.254.49:8000
-    @BeforeAll
-    public static void setup(){
-
-        RestAssured.baseURI = "http://54.174.254.49:8000";
-        RestAssured.basePath="/api";
-    }
-
-    @AfterAll
-    public static void teardown() {
-      RestAssured.reset();
-    }
-
+public class SpartanHelloTest extends SpartanTestBase {
 
     @Test
     public void testHello(){
 
-        SerenityRest.given()
-                .log().all().
-        when()
-                .get("/hello").
-        then()
-                .log().all()
-                .statusCode(200)
-                ;
-// get response object from above request
+       SerenityRest.given()
+                            .log().all().
+                    when()
+                            .get("/hello").
+                    then()
+                            .log().all()
+                            .statusCode(200);
+
+       // get response object from above request
 //        .lastResponse() method from SerenityRest will return
         // the response object from previous request
         lastResponse().prettyPrint() ;
@@ -58,14 +45,14 @@ public class SpartanHelloTest {
 
     }
 
-
+    @DisplayName("Test Hello with detailed steps in report")
     @Test
     public void testHelloResponseStepByStep(){
 
         SerenityRest.given()
-                .log().uri().
-                when()
-                .get("/hello") ;
+                        .log().uri().
+                     when()
+                        .get("/hello") ;
         // verify status code is 200, content type is text
         // body is Hello From Sparta
         assertEquals(200, lastResponse().statusCode() ) ;
@@ -75,21 +62,18 @@ public class SpartanHelloTest {
         // Ensure class from Serenity provide the way
         // to let our response assertion show up as a step
         // here is how
-        Ensure.that("Verify Status Code is 200" ,
-                thenPart -> thenPart.statusCode(200)
-        ) ;
+        Ensure.that("Status Code is 200", thenPart -> thenPart.statusCode(200)  ) ;
 
         Ensure.that("Content Type is Text Plain" ,
-                blaBla -> blaBla.contentType(ContentType.TEXT)
-        ) ;
+                            blaBla -> blaBla.contentType(ContentType.TEXT) ) ;
 
         Ensure.that("Body is Hello From Sparta" ,
-                thenPart -> thenPart.body( is("Hello from Sparta") )
-        ) ;
+                             thenPart -> thenPart.body( is("Hello from Sparta") )  ) ;
 
 
 
 
     }
+
 
 }

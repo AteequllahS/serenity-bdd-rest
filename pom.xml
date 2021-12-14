@@ -11,6 +11,7 @@
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>
@@ -22,13 +23,13 @@
 
         <dependency>
             <groupId>net.serenity-bdd</groupId>
-            <artifactId>serenity-junit5</artifactId>
+            <artifactId>serenity-rest-assured</artifactId>
             <version>3.1.1</version>
         </dependency>
 
         <dependency>
             <groupId>net.serenity-bdd</groupId>
-            <artifactId>serenity-rest-assured</artifactId>
+            <artifactId>serenity-junit5</artifactId>
             <version>3.1.1</version>
         </dependency>
 
@@ -39,12 +40,15 @@
         </dependency>
 
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-            <version>1.7.32</version>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-suite</artifactId>
+            <version>1.8.2</version>
         </dependency>
 
     </dependencies>
+
+
+
 
     <build>
         <plugins>
